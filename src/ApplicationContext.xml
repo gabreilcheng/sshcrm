@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+
+<!-- 开启 扫包 -->
+<context:component-scan base-package="com.tz"></context:component-scan>
+
+<!-- 配置c3p0连接池 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+	    <property name="driverClass" value="${jdbc.driverClass}"></property>
+	    <property name="user" value="${jdbc.user}"></property>
+	    <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+<!--  将sessionFactory配置到spring中     -->
+<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<!-- 引入c3p0 -->
+	<property name="dataSource" ref="dataSource"></property>
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="hibernate.show_sql">true</prop>
+			<prop key="hibernate.format_sql">true</prop>
+			<prop key="hibernate.hbm2ddl.auto">update</prop>
+		</props>
+	</property>
+	<!-- 引入orm元数据  -->
+	<property name="mappingDirectoryLocations" value="classpath:com/tz/domain">
+	</property>
+	
+</bean>
+
+<!-- 配置事务管理器 -->
+<bean name ="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+<tx:annotation-driven/>
+<context:annotation-config />
+
+<!-- 
+<bean name="customerAction" class="com.tz.web.action.CustomerAction" scope="prototype" >
+	<property name="cs" ref="customerService"></property>
+</bean>
+
+<bean name="customerService" class="com.tz.service.Impl.customerServiceImpl">
+	<property name="cd" ref="customerDao"></property>
+</bean>
+
+<bean name="customerDao" class="com.tz.dao.Impl.customerDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+数据字典
+<bean name="baseDictAction" class="com.tz.web.action.BaseDictAction" scope="prototype" >
+	<property name="bdc" ref="baseDictService"></property>
+</bean>
+
+<bean name="baseDictService" class="com.tz.service.Impl.BaseDictServiceImpl">
+	<property name="bd" ref="baseDictDao"></property>
+</bean>
+
+<bean name="baseDictDao" class="com.tz.dao.Impl.BaseDictDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+文件上传
+<bean name="uploadAction" class="com.tz.web.action.uploadAction" scope="prototype" >
+	 
+</bean>
+联系人 
+<bean name="linkManAction" class="com.tz.web.action.LinkManAction" scope="prototype" >
+	<property name="lms" ref="linkManService"></property>
+</bean>
+
+<bean name="linkManService" class="com.tz.service.Impl.linkManServiceImpl">
+	<property name="lkd" ref="linkManDao"></property>
+</bean>
+
+<bean name="linkManDao" class="com.tz.dao.Impl.linkManDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+user
+<bean name="userAction" class="com.tz.web.action.UserAction" scope="prototype" >
+	<property name="us" ref="userService"></property>
+</bean>
+
+<bean name="userService" class="com.tz.service.Impl.UserServiceImpl">
+	<property name="ud" ref="userDao"></property>
+</bean>
+
+<bean name="userDao" class="com.tz.dao.Impl.UserDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+用户注册检测 
+<bean name="userAjaxAction" class="com.tz.web.action.UserAjaxAction" scope="prototype" >
+	<property name="userService" ref="userService"></property>
+</bean>
+拜访客户
+<bean name="saleVisitAction" class="com.tz.web.action.SaleVisitAction" scope="prototype" >
+	<property name="svs" ref="saleVIsitImpl"></property>
+</bean>
+
+<bean name="saleVIsitImpl" class="com.tz.service.Impl.SaleVIsitImpl">
+	<property name="svd" ref="saleVisitDaoImpl"></property>
+</bean>
+
+<bean name="saleVisitDaoImpl" class="com.tz.dao.Impl.SaleVisitDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+ -->
+
+
+
+
+
+</beans>

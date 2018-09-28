@@ -1,0 +1,47 @@
+.Tlogin{
+	margin:auto;
+	font-size:26px;
+	color:#fff;
+	font-family:"Î¢ÈíÑÅºÚ";
+	text-align:center;
+	line-height:60px;
+	background: #ffab3f;
+	letter-spacing:4px;
+}
+.lg_un{
+	line-height:30px;
+	background:;
+	position:absolute;
+	right:32px;
+	top:60px;
+	z-index:99;
+	font-size:18px;
+	color:#7776b9;
+	letter-spacing:3px;
+}
+.lg_un span{
+	font-size:14px;
+	padding-right:42px;
+	font-weight:bold;
+}
+.lg_un span b{
+	color:red;
+}
+/* userEdit.jsp */
+#editPwd{
+	font-size:20px;
+	font-weight:bold;
+	color:#fff;
+	text-align:center;
+	line-height:60px;
+	
+}
+
+
+
+
+
+
+
+
+

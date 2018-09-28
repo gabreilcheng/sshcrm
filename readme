@@ -1,0 +1,10 @@
+1. 导包
+2. 先配spring  创建配置文件  ，并导入约束（beans context aop tx）
+3. 配置web.xml  
+
+监听器 和 spring配置文件参数
+sturts2核心过滤器
+
+4.单独配置sturts2.xml
+
+5.整合struts2与spring

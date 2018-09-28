@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!--常量的配置： 国际化编码，解决post提交的乱码问题  -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<!--extension : 标识后缀名    -->
+	<constant name="struts.action.extension" value="action,,"></constant>
+	<!--指定是否 开启开发模式功能    -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 将action对象交给 spring容器  -->
+	<constant name="struts.objectFactory" value="spring"></constant>
+
+	<package name="crm" namespace="/" extends="struts-default">
+		<!-- 拦截器 -->
+		<interceptors>
+			<interceptor name="loginIntercepter" class="com.tz.util.LoginIntercepter"></interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="loginIntercepter">
+					<param name="excludeMethods">login,save,ajax</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<!-- 定义全局结果集  -->
+		<global-results>
+			<result name="toLogin" type="redirect">login.jsp</result>
+		</global-results>
+		
+		<!-- 定义全局异常  -->
+		<global-exception-mappings >
+				<exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+		</global-exception-mappings>
+<!--action部分  -->
+		<action name="customer_*" class="customerAction" method="{1}">
+			<result name="pageBean">customer/customer_list.jsp</result>
+			<result name="update">customer/customer_edit.jsp</result>
+			<result name="suceess" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">customer_pageList</param>
+			</result>
+			<result name="industyCount">customer/IndustyCount.jsp</result>
+			<result name="sourceCount">customer/sourceCount.jsp</result>
+		</action>
+		
+		<action name="baseDict_*" class="baseDictAction" method="{1}">
+		</action>
+		
+		<action name="ajax_*" class="customerAction" method="{1}">
+		</action>
+ 		<!-- 文件上传  -->
+ 		<action name="upload" class="uploadAction"  >
+			<result name="upload">upload/upload.jsp</result>
+ 		</action>
+ 		<!-- 联系人 -->
+ 		<action name="linkman_*" class="linkManAction" method="{1}">
+			<result name="list" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">linkman_pageList</param>
+			</result>
+			<result name="pageBean">linkman/linkman_list.jsp</result>
+			<result name="update">linkman/linkman_edit.jsp</result>
+		</action>
+ 		<!-- user 部分 -->
+ 		<action name="user_*" class="userAction" method="{1}">
+			<result name="toLogin" type="redirect">/login.jsp</result>
+			<result name="toHome" type="redirect">/index.jsp</result>
+			<result name="error" >/login.jsp</result>
+		</action>
+		<!-- user修改密码  -->
+ 		<action name="useredit_*" class="userAction" method="{1}">
+ 			<result name="error" >/userEdit.jsp</result>
+ 		</action>
+ 		
+ 		<action name="userAjax_*" class="userAjaxAction" method="{1}">
+		</action>
+		
+ 		<action name="salevisit_*" class="saleVisitAction" method="{1}">
+ 			<result name="list" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">salevisit_pageList</param>
+			</result>
+ 			<result name="pageBean">salevisit/salevisit_list.jsp</result>
+ 			<result name="show">salevisit/salevisit_edit.jsp</result>
+		</action>
+		<!-- 角色管理 -->
+		<action name="role_*" class="roleAction" method="{1}">
+ 			<result name="save" >/index.jsp</result>
+ 			<result name="pageBean">user/role_list.jsp</result>
+ 			<result name="delete" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">role_pageList</param>
+			</result>
+ 		</action>
+ 		
+ 		
+	</package>
+	
+</struts>

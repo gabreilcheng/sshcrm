@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping package="com.tz.domain">
+    	<class name="Role" table="sys_role">
+    		<id name="role_id">
+    			<generator class="native"></generator>
+    		</id>
+    		<property name="role_name"></property>
+    		<property name="role_memo"></property>
+    		<property name="state"></property>
+    		<!-- 表达 一的一方 -->
+    		<!-- 级联操作   cascade="save-update"  delete：级联删除      all:二合一的效果  
+    			   目的少些几行代码
+    		 -->
+    		<!-- inverse="true" 表示交给对方维护  ，默认是false  
+    		             将来在开发中多对多关系中一定要有一方放弃维护
+    		-->
+    		<set name="users" table="sys_user_role">
+    			<key column="role_id"></key>
+    			<many-to-many class="User"  column="user_id" ></many-to-many>
+    		</set>
+    	</class>
+    </hibernate-mapping>

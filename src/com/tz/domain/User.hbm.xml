@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping package="com.tz.domain">
+    	<class name="User" table="sys_user">
+    		<id name="user_id">
+    			<generator class="native"></generator>
+    		</id>
+    		<property name="user_name"></property>
+    		<property name="user_code"></property>
+    		<property name="user_password"></property>
+    		<property name="user_repassword"></property>
+    		<property name="user_state"></property>
+    		<!-- 表达 一的一方 -->
+    		<!-- 级联操作   cascade="save-update"  delete：级联删除      all:二合一的效果  
+    			   目的少些几行代码
+    		 -->
+    		<!-- inverse="true" 表示交给对方维护  ，默认是false  -->
+    		<set name="roles" table="sys_user_role" >
+    			<key column="user_id"></key>
+    			<many-to-many class="Role" column="role_id"></many-to-many>
+    		</set>
+    		
+    		<set name="saleVisits"  inverse="false" >
+    			<key column="visit_user_id"></key>
+    			<one-to-many class="SaleVisit" />
+    		</set>
+    		
+    	</class>
+    </hibernate-mapping>

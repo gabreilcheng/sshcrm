@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping package="com.tz.domain">
+    	<class name="Customer" table="cst_customer">
+    		<id name="cust_id">
+    			<generator class="native"></generator>
+    		</id>
+    		<property name="cust_name"></property>
+    		<property name="cust_linkman"></property>
+    		<property name="cust_phone"></property>
+    		<property name="cust_mobile"></property>
+    		<property name="cust_Address"></property>
+			<property name="cust_Fax"></property>
+			<property name="cust_Website"></property>
+    		<!-- 表达 一的一方 -->
+    		<!-- 级联操作   cascade="save-update"  delete：级联删除      all:二合一的效果  
+    			   目的少些几行代码
+    		 -->
+    		<!-- inverse="true" 表示交给对方维护  ，默认是false  -->
+    		<!-- 
+    			 fetch: select(单表查询)、join(多表查询加载集合)、subselect(子查询加载集合)
+    			 lazy : true 、 false 、 extra(极其懒惰，用于只有size()的时候 )  
+    	     -->
+    		<many-to-one name="cust_source"  column="cust_source" class="BaseDict" ></many-to-one>
+			<many-to-one name="cust_industry"  column="cust_industry" class="BaseDict"></many-to-one>
+			<many-to-one name="cust_level"  column="cust_level" class="BaseDict"></many-to-one>
+			
+			<set name="linkmans"  inverse="false" >
+    			<key column="lkm_cust_id"></key>
+    			<one-to-many class="linkman" />
+    		</set>
+    		
+			<set name="saleVisits"  inverse="false" >
+    			<key column="visit_cust_id"></key>
+    			<one-to-many class="SaleVisit" />
+    		</set>
+    		
+			
+    	</class>
+    </hibernate-mapping>
